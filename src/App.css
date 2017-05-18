@@ -18,6 +18,27 @@
   font-size: large;
 }
 
+.Game {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.Board {
+  display: flex;
+}
+
+.Slat {
+
+}
+
+.Hole {
+  padding: 5px;
+  min-width: 30px;
+  min-height: 30px;
+  border: 1px solid lightblue;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
