@@ -4,54 +4,17 @@ import './App.css';
 
 
 
-class Hole extends Component {
-  render(){
-    return (
-      <div className="Hole"></div>
-    )
-  }
+function Hole(props){
+  return <div className="Hole"><div className={props.value}></div></div>
 }
 
-
-
-class Slat extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      piecesSoFar: 0,
-      holes: new Array(this.props.depth).fill(0)
-    }
-  }
-
-  dropPiece(){
-
-    const pieces = this.state.piecesSoFar;
-    const depth = this.state.holes.length;
-
-    console.log("Drop a piece into a slat")
-    if(pieces < depth ){
-      this.setState({
-        piecesSoFar: this.state.piecesSoFar+1
-      })
-    }
-    console.log(this.state.piecesSoFar)
-  }
-
-
-  render(){
-
-    let holes = [...Array(this.state.holes.length)].map((x, j) => 
-      <Hole key={j}></Hole>
-    )
-
-    return (
-      <div className="Slat" onClick={() => this.dropPiece()}>
-        {holes}
+function Slat(props){
+    return <div className="Slat" onClick={() => props.handleClick()}>
+      {[...Array(props.holes.length)].map((x, j) => 
+        <Hole key={j} value={props.holes[j]}></Hole>)}
       </div>
-    )
-  }
-}
+ }
+
 
 
 class Board extends Component {
@@ -59,22 +22,42 @@ class Board extends Component {
   constructor() {
     super();
     this.state = {
-      dimensions: { rows: 6, cols: 7 }
-    };
+      boardState: new Array(7).fill(new Array(6).fill(null)),
+      playerTurn: 'red'
+    }
   }
 
-  handleClick() {
-    console.log("Clicked Board")
+  handleClick(slatID) {
+    console.log(slatID)
+    const boardCopy = this.state.boardState.map(function(arr) {
+      return arr.slice();
+    });
+    if( boardCopy[slatID].indexOf(null) !== -1 ){
+      let newSlat = boardCopy[slatID].reverse()
+      newSlat[newSlat.indexOf(null)] = this.state.playerTurn
+      newSlat.reverse()
+      this.setState({
+        playerTurn: (this.state.playerTurn === 'red') ? 'blue' : 'red',
+        boardState: boardCopy
+      })
+    }else{
+         console.log("slat full")
+    }
+    console.log(this.state.boardState)
   }
 
   render(){
 
-    let slats = [...Array(this.state.dimensions.cols)].map((x, j) => 
-      <Slat key={j} depth={this.state.dimensions.rows}></Slat>
+    let slats = [...Array(this.state.boardState.length)].map((x, i) => 
+      <Slat 
+          key={i}
+          holes={this.state.boardState[i]}
+          handleClick={() => this.handleClick(i)}
+      ></Slat>
     )
 
     return (
-      <div className="Board" onClick={() => this.handleClick()}>
+      <div className="Board">
         {slats}
       </div>
     )
