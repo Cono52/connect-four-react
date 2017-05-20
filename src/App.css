@@ -46,17 +46,30 @@
   min-height: 30px;
   border-radius: 4px;
   top: -400px;
-  transition: transform 0.6s;
+  transition: transform 0.5s;
 }
 
-.red {
+.Red {
   background-color: #FF456C;
   transform: translateY(400px);
 }
 
-.blue {
+.Blue {
   background-color: #2CC5FF;
   transform: translateY(400px);
+}
+
+.winnerMessage {
+  margin: 20px;
+  font-size: 0pt;
+  font: 12pt;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.18, 0.99, 0.8, 1.17);
+}
+
+.appear {
+  opacity: 1;
+  font-size: 20pt;
 }
 
 

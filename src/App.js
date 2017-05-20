@@ -15,20 +15,17 @@ function Slat(props){
       </div>
  }
 
-
-
 class Board extends Component {
 
   constructor() {
     super();
     this.state = {
       boardState: new Array(7).fill(new Array(6).fill(null)),
-      playerTurn: 'red'
+      playerTurn: 'Red'
     }
   }
 
   handleClick(slatID) {
-    console.log(slatID)
     const boardCopy = this.state.boardState.map(function(arr) {
       return arr.slice();
     });
@@ -37,17 +34,20 @@ class Board extends Component {
       newSlat[newSlat.indexOf(null)] = this.state.playerTurn
       newSlat.reverse()
       this.setState({
-        playerTurn: (this.state.playerTurn === 'red') ? 'blue' : 'red',
+        playerTurn: (this.state.playerTurn === 'Red') ? 'Blue' : 'Red',
         boardState: boardCopy
       })
-    }else{
-         console.log("slat full")
     }
-    console.log(this.state.boardState)
   }
 
   render(){
-
+    let winner = checkWinner(this.state.boardState)
+    let winnerMessageStyle
+    if(winner !== ""){
+      winnerMessageStyle = "winnerMessage appear"
+    }else {
+      winnerMessageStyle = "winnerMessage"
+    }
     let slats = [...Array(this.state.boardState.length)].map((x, i) => 
       <Slat 
           key={i}
@@ -57,8 +57,11 @@ class Board extends Component {
     )
 
     return (
-      <div className="Board">
-        {slats}
+      <div>
+        <div className="Board">
+          {slats}
+        </div>
+        <div className={winnerMessageStyle}>{winner}</div>
       </div>
     )
   }
@@ -71,7 +74,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Griderator</h2> {/*<h2>C &#9829; J</h2>*/}
+          <h2>Griderator</h2>
         </div>
         <div className="Game">
           <Board></Board>
@@ -79,6 +82,34 @@ class App extends Component {
       </div>
     );
   }
+}
+
+function checkLine(a,b,c,d) {
+    return ((a !== null) && (a === b) && (a === c) && (a === d));
+}
+
+function checkWinner(bs) {
+    for (let c = 0; c < 7; c++)
+        for (let r = 0; r < 4; r++)
+            if (checkLine(bs[c][r], bs[c][r+1], bs[c][r+2], bs[c][r+3]))
+                return bs[c][r] + ' wins!'
+
+    for (let r = 0; r < 6; r++)
+         for (let c = 0; c < 4; c++)
+             if (checkLine(bs[c][r], bs[c+1][r], bs[c+2][r], bs[c+3][r]))
+                 return bs[c][r] + ' wins!'
+
+    for (let r = 0; r < 3; r++)
+         for (let c = 0; c < 4; c++)
+             if (checkLine(bs[c][r], bs[c+1][r+1], bs[c+2][r+2], bs[c+3][r+3]))
+                 return bs[c][r] + ' wins!'
+
+    for (let r = 0; r < 4; r++)
+         for (let c = 3; c < 6; c++)
+             if (checkLine(bs[c][r], bs[c-1][r+1], bs[c-2][r+2], bs[c-3][r+3]))
+                 return bs[c][r] + ' wins!'
+
+    return "";
 }
 
 export default App;
