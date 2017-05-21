@@ -3,7 +3,7 @@ Description
 
 Connect-4 game implemented with Reactjs, bootstrapped using create-react-app.
 
-The AI is currently dumb.
+The AI is currently dumb and may take its turn first depending on the state of the last game.
 
 Demo hosted on: https://dry-plateau-81278.herokuapp.com/
 
