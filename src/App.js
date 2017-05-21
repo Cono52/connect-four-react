@@ -28,7 +28,6 @@ class Board extends Component {
     }
   }
 
-
   selectedGame(mode){
     this.setState({
        gameMode: mode,
@@ -52,13 +51,14 @@ class Board extends Component {
     }
   }
 
+  /*Only make moves if winner doesn't exist*/
   handleClick(slatID) {
     if(this.state.winner === ''){
       this.makeMove(slatID)
     }
   }
   
-  
+  /*check the winner and make AI move IF game is in AI mode*/
   componentDidUpdate(){
     let winner = checkWinner(this.state.boardState)
     if(this.state.winner !== winner){
@@ -80,6 +80,8 @@ class Board extends Component {
   }
 
   render(){
+
+    /*If a winner exists display the name*/
     let winnerMessageStyle
     if(this.state.winner !== ""){
       winnerMessageStyle = "winnerMessage appear"
@@ -87,6 +89,7 @@ class Board extends Component {
       winnerMessageStyle = "winnerMessage"
     }
 
+    /*Contruct slats allocating column from board*/
     let slats = [...Array(this.state.boardState.length)].map((x, i) => 
       <Slat 
           key={i}
