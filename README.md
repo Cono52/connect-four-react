@@ -1,7 +1,7 @@
 Description
 ====================
 
-Connect-4 game implemented with Reactjs, bootstrapped using create-react-app.
+Connect-4-esque game implemented with Reactjs, bootstrapped using create-react-app.
 
 The AI is currently dumb and may take its turn first depending on the state of the last game.
 
