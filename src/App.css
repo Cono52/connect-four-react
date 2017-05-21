@@ -24,6 +24,26 @@
   justify-content: center;
 }
 
+button {
+    background-color: #5689db;
+    border: 1px solid #5689db;
+    border-radius: 3px;
+    display: inline-block;
+    color: #FFF;
+    font-size: 12pt;
+    padding: 7px 28px;
+    text-decoration: none;
+    margin: 5px;
+    transition: all 0.5s;
+    max-width: 160px;
+    min-width: 160px;
+}
+
+button:hover {
+    background-color: lightblue;
+    font-size: 14pt;
+}
+
 .Board {
   display: flex;
 }
